@@ -1,6 +1,13 @@
 # Data_Visualisation
 
-format des données attendues 
+# Script Python (Poc)
+Afin d'avoir un jeu de données de tests, **avec des données aléatoires**, veuillez executer le fichier `gen_date.py`
+```bash
+python gen_data.py
+```
+
+
+## format des données attendues 
 
 ```mermaid
 classDiagram
