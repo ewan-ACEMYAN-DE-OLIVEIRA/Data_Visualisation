@@ -6,8 +6,7 @@ Afin d'avoir un jeu de données de tests, **avec des données aléatoires**, veu
 python gen_data.py
 ```
 
-
-## format des données attendues 
+## format des données attendues 
 
 ```mermaid
 classDiagram
