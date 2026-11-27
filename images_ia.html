@@ -23,7 +23,6 @@ License: MIT
   <style>
     body { font-family: sans-serif; max-width: 1000px; margin: 0 auto; padding: 16px; }
     .chart { width: 100%; height: 480px; margin-bottom: 30px; }
-    .chart.tall { height: 560px; }
     #loader { padding: 16px; border: 1px dashed #999; border-radius: 8px; margin-bottom: 20px; }
     pre { background: #f4f4f4; padding: 10px; overflow-x: auto; }
     button { margin-top: 8px; }
@@ -45,8 +44,6 @@ License: MIT
   <div id="fig3" class="chart"></div>
   <div id="fig4" class="chart"></div>
   <div id="fig5" class="chart"></div>
-  <div id="fig6" class="chart tall"></div>
-  <div id="fig7" class="chart"></div>
 
   <script>
   // ------------------------------------------------------------------
@@ -243,58 +240,15 @@ License: MIT
       });
     }
 
-    // ------------------------------------------------------------------
-    // 6. Heatmap : année x type de source (nombre d'images collectées)
-    // ------------------------------------------------------------------
-    {
-      // pd.crosstab(df["source_type"], df["year"])
-      const withYear = df.filter(r => r.year !== null && r.source_type);
-      const types = [...new Set(withYear.map(r => r.source_type))];
-      const cols  = [...new Set(withYear.map(r => r.year))].sort((a, b) => a - b);
-      let grid = types.map(t => cols.map(y =>
-        withYear.filter(r => r.source_type === t && r.year === y).length));
-
-      // sources les plus fournies en haut
-      const order = types.map((t, i) => i).sort((a, b) => sum(grid[b]) - sum(grid[a]));
-      const rowsLabels = order.map(i => types[i]);
-      grid = order.map(i => grid[i]);
-
-      const max = Math.max(...grid.flat());
-      const xLabels = cols;
-      const annotations = [];
-      grid.forEach((row, i) => row.forEach((v, j) => annotations.push({
-        x: xLabels[j], y: rowsLabels[i], text: String(v), showarrow: false,
-        font: { size: 10, color: v < max * 0.6 ? "white" : "black" }
-      })));
-
-      Plotly.newPlot("fig6", [{
-        type: "heatmap", z: grid, x: xLabels, y: rowsLabels, colorscale: "Viridis",
-        colorbar: { title: { text: "Nombre d'images", side: "right" } }
-      }], {
-        title: "Heatmap - Année x type de source",
-        xaxis: { title: "Année de publication", dtick: 1 },
-        yaxis: { title: "Type de source", autorange: "reversed", automargin: true },
-        annotations
-      });
-    }
 
     // ------------------------------------------------------------------
-    // 7. Pie chart : image selon la catégorie
-    // ------------------------------------------------------------------
-    {
-      const cat = valueCounts(df, "category");
-      Plotly.newPlot("fig7", [pieTrace(cat)],
-        { title: "Pie Chart - Répartition des images par catégorie", showlegend: false });
-    }
-
-    // ------------------------------------------------------------------
-    // SAVE_FIGURES : enregistrement des PNG (figure_01.png … figure_07.png)
+    // SAVE_FIGURES : enregistrement des PNG (figure_01.png … figure_05.png)
     // ------------------------------------------------------------------
     if (SAVE_FIGURES) {
       const btn = document.getElementById("saveBtn");
       btn.hidden = false;
       btn.onclick = async () => {
-        for (let n = 1; n <= 7; n++) {
+        for (let n = 1; n <= 5; n++) {
           await Plotly.downloadImage(`fig${n}`, {
             format: "png", filename: `figure_${String(n).padStart(2, "0")}`, scale: 2
           });
