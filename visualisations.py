@@ -101,28 +101,6 @@ plt.show()
 
 
 # ------------------------------------------------------------------
-# 6. Heatmap : année x type de source (nombre d'images collectées)
-# ------------------------------------------------------------------
-grid = pd.crosstab(df["source_type"], df["year"])
-grid = grid.loc[grid.sum(axis=1).sort_values(ascending=False).index]   # sources les plus fournies en haut
-
-plt.figure(figsize=(9, 6))
-plt.imshow(grid.values, cmap="viridis", interpolation="nearest", aspect="auto")
-plt.colorbar(label="Nombre d'images")
-plt.xticks(range(len(grid.columns)), grid.columns)
-plt.yticks(range(len(grid.index)), grid.index)
-for i in range(grid.shape[0]):
-    for j in range(grid.shape[1]):
-        v = grid.values[i, j]
-        plt.text(j, i, v, ha="center", va="center", fontsize=8,
-                 color="white" if v < grid.values.max() * 0.6 else "black")
-plt.xlabel("Année de publication")
-plt.ylabel("Type de source")
-plt.title("Heatmap - Année x type de source")
-plt.tight_layout()
-plt.show()
-
-# ------------------------------------------------------------------
 # 6. Pie chart : image selon la catégorie
 # ------------------------------------------------------------------
 
