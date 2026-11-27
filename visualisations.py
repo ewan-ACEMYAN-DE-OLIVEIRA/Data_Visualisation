@@ -83,3 +83,29 @@ plt.title("Pie Chart - Répartition des sources de type caméra")
 plt.show()
 
 
+# ------------------------------------------------------------------
+# 5. Aires empilées : images retrouvées par dataset, par année
+#    (une image présente dans 2 datasets est comptée dans chacun)
+# ------------------------------------------------------------------
+per_year = df.groupby("year")[DATASETS].sum()
+
+plt.figure(figsize=(9, 5))
+plt.stackplot(per_year.index, per_year.T.values, labels=DATASETS)
+plt.title("Stacked Area - Images retrouvées par dataset et par année")
+plt.xlabel("Année de publication")
+plt.ylabel("Nombre d'images retrouvées")
+plt.xlim(per_year.index.min(), per_year.index.max())
+plt.legend(loc="center left", bbox_to_anchor=(1.01, 0.5), fontsize=8)   # légende hors du graphique
+plt.tight_layout()
+plt.show()
+
+
+# ------------------------------------------------------------------
+# 6. Pie chart : image selon la catégorie
+# ------------------------------------------------------------------
+
+cat = df["category"].value_counts()
+
+plt.pie(cat.values, labels=cat.index, autopct="%1.0f%%", startangle=90)
+plt.title("Pie Chart - Répartition des images par catégorie")
+plt.show()

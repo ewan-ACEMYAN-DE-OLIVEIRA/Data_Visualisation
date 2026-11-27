@@ -121,8 +121,6 @@ for i in range(1, N + 1):
         "date_published": date.isoformat(), "scraped_date": "2026-11-20",
         "found_in_datasets": "|".join(ds), "n_datasets": len(ds), "used_for_training": len(ds) > 0,
         "similarity_score": round(min(.45, max(.18, random.gauss(.30 if not cam else .26, .045))), 3),
-        "opt_out_registered": random.random() < (.07 if not cam else .01),
-        "contains_faces": faces, "contains_plates": plates,
     })
 
 with open("images_ia_sample.csv", "w", newline="", encoding="utf-8") as f:
