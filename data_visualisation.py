@@ -69,5 +69,3 @@ plt.xlabel('X-axis Label')
 plt.ylabel('Y-axis Label')
 plt.title('Heatmap')
 plt.show()
-
-
